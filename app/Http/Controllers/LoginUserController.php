@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoginUser;
+use App\Models\Loginuser;
 use Illuminate\Http\Request;
 
-class LoginUserController extends Controller
+class LoginuserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LoginUserController extends Controller
      */
     public function index()
     {
-        $items = LoginUser::all();
+        $items = Loginuser::all();
         return response()->json([
             'data' => $items
         ],200);
@@ -28,7 +28,10 @@ class LoginUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Loginuser::create($request->all());
+        return response()->json([
+            'data' => $item
+        ], 201);
     }
 
     /**
@@ -37,9 +40,18 @@ class LoginUserController extends Controller
      * @param  \App\Models\LoginUser  $loginUser
      * @return \Illuminate\Http\Response
      */
-    public function show(LoginUser $loginUser)
+    public function show(Loginuser $loginuser)
     {
-        //
+        $item = Loginuser::find($loginuser);
+        if ($item) {
+            return response()->json([
+                'data' => $item
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ], 404);
+        }
     }
 
     /**
@@ -49,9 +61,22 @@ class LoginUserController extends Controller
      * @param  \App\Models\LoginUser  $loginUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LoginUser $loginUser)
+    public function update(Request $request, Loginuser $loginuser)
     {
-        //
+        $update = [
+            'message' => $request->message,
+            'url' => $request->url
+        ];
+        $item = Loginuser::where('id', $loginuser->id)->update($update);
+        if ($item) {
+            return response()->json([
+                'message' => 'Updated successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ], 404);
+        }
     }
 
     /**
@@ -60,8 +85,17 @@ class LoginUserController extends Controller
      * @param  \App\Models\LoginUser  $loginUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LoginUser $loginUser)
+    public function destroy(Loginuser $loginuser)
     {
-        //
+        $item = Loginuser::where('id', $loginuser->id)->delete();
+        if ($item) {
+            return response()->json([
+                'message' => 'Deleted successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ], 404);
+        }
     }
 }

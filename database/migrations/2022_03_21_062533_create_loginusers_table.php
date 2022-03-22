@@ -17,8 +17,8 @@ class CreateLoginusersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('share');
-            $table->string('comment');
+            $table->string('share')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
