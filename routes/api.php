@@ -2,6 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginuserController;
+use App\Http\Controllers\UserController;
 
-Route::apiResource('/v1/rest', LoginuserController::class);
+Route::apiResource('/v1/rest', UserController::class);

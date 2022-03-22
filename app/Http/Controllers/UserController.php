@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Loginuser;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class LoginuserController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class LoginuserController extends Controller
      */
     public function index()
     {
-        $items = Loginuser::all();
+        $items = User::all();
         return response()->json([
             'data' => $items
-        ],200);
+        ], 200);
     }
 
     /**
@@ -28,7 +28,7 @@ class LoginuserController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Loginuser::create($request->all());
+        $item = User::create($request->all());
         return response()->json([
             'data' => $item
         ], 201);
@@ -37,12 +37,12 @@ class LoginuserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LoginUser  $loginUser
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Loginuser $loginuser)
+    public function show(User $user)
     {
-        $item = Loginuser::find($loginuser);
+        $item = User::find($user);
         if ($item) {
             return response()->json([
                 'data' => $item
@@ -58,16 +58,16 @@ class LoginuserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LoginUser  $loginUser
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Loginuser $loginuser)
+    public function update(Request $request, User $user)
     {
         $update = [
             'message' => $request->message,
             'url' => $request->url
         ];
-        $item = Loginuser::where('id', $loginuser->id)->update($update);
+        $item = User::where('id', $user->id)->update($update);
         if ($item) {
             return response()->json([
                 'message' => 'Updated successfully',
@@ -82,12 +82,12 @@ class LoginuserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LoginUser  $loginUser
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Loginuser $loginuser)
+    public function destroy(User $user)
     {
-        $item = Loginuser::where('id', $loginuser->id)->delete();
+        $item = User::where('id', $user->id)->delete();
         if ($item) {
             return response()->json([
                 'message' => 'Deleted successfully',
