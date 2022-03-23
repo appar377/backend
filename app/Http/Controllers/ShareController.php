@@ -15,7 +15,7 @@ class ShareController extends Controller
      */
     public function index()
     {
-        $items = Share::all();
+        $items = Share::has('user')->get();
         return response()->json([
             'data' => $items
         ], 200);
