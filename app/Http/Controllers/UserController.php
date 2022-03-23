@@ -98,4 +98,8 @@ class UserController extends Controller
             ], 404);
         }
     }
+
+    public function shares() {
+        return $this->hasMany('App\Models\Share');
+    }
 }
