@@ -28,7 +28,10 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Comment::create($request->all());
+        return response()->json([
+            'data' => $item
+        ], 201);
     }
 
     /**
@@ -39,7 +42,10 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        $item = Comment::where('share_id', '=', $comment->id)->get();
+        return response()->json([
+            'data' => $item
+        ], 200);
     }
 
     /**

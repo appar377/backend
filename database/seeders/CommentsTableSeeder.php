@@ -15,18 +15,21 @@ class CommentsTableSeeder extends Seeder
     public function run()
     {
         $param = [
+            'user_id' => '1',
             'share_id' => '1',
             'comment' => 'commenttest1',
         ];
         DB::table('comments')->insert($param);
 
         $param = [
+            'user_id' => '1',
             'share_id' => '1',
             'comment' => 'commenttest2',
         ];
         DB::table('comments')->insert($param);
 
         $param = [
+            'user_id' => '2',
             'share_id' => '2',
             'comment' => 'commenttest3',
         ];

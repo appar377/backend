@@ -15,7 +15,7 @@ class ShareController extends Controller
      */
     public function index()
     {
-        $items = Share::has('user')->get();
+        $items = Share::with('user')->get();
         return response()->json([
             'data' => $items
         ], 200);
@@ -50,7 +50,20 @@ class ShareController extends Controller
      */
     public function show(Share $share)
     {
-        //
+        $item = Share::with(['user','comments'])->where('id',$share->id)->get();
+        if ($item) {
+            return response()->json([
+                'data' => $item
+            ],
+                200
+            );
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ],
+                404
+            );
+        }
     }
 
     /**
@@ -73,14 +86,15 @@ class ShareController extends Controller
      */
     public function destroy(Share $share)
     {
-        //
-    }
-
-    public function comments() {
-        return $this->hasMany('App\Models\Comment');
-    }
-
-    public function user() {
-        return $this->belongsTo('App\Models\User');
+        $item = Share::where('id', $share->id)->delete();
+        if ($item) {
+            return response()->json([
+                'message' => 'Deleted successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ], 404);
+        }
     }
 }
