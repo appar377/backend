@@ -29,7 +29,7 @@ class ShareController extends Controller
      */
     public function store(Request $request)
     {
-        $id = User::where('email', $request->email)->get('id');
+        $id = User::where('email', $request->email)->first();
         $param = [
             'user_id' => $id,
             'share' => $request->share,

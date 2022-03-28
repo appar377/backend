@@ -29,7 +29,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = User::where('email', $request->email)->get('id');
+        $user_id = User::where('email', $request->email)->first();
 
         $items = [
             'user_id' => $user_id,

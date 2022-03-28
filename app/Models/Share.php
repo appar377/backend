@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Share extends Model
 {
+
     protected $guarded = array('id');
 
     public function user()
