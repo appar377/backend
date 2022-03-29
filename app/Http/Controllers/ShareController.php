@@ -29,7 +29,8 @@ class ShareController extends Controller
      */
     public function store(Request $request)
     {
-        $id = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
+        $id = $user->id;
         $param = [
             'user_id' => $id,
             'share' => $request->share,
@@ -50,7 +51,7 @@ class ShareController extends Controller
      */
     public function show(Share $share)
     {
-        $item = Share::with(['user','comments'])->where('id',$share->id)->get();
+        $item = Share::with(['user'])->where('id',$share->id)->first();
         if ($item) {
             return response()->json([
                 'data' => $item

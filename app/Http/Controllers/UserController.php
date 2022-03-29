@@ -63,10 +63,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $like_count = $request->like_count;
+        
+        if($request->like_count == 1){
+            $like_count -= 1;
+        } elseif($request->like_count == 0){
+            $like_count += 1;
+        } 
+
         $update = [
-            'message' => $request->message,
-            'url' => $request->url
+            'like_count' => $like_count,
         ];
+
         $item = User::where('id', $user->id)->update($update);
         if ($item) {
             return response()->json([

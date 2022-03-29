@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\User;
+use App\Models\Share;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -15,7 +16,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $items = Comment::all();
+        $items = comment::all();
         return response()->json([
             'data' => $items
         ], 200);
@@ -29,14 +30,6 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = User::where('email', $request->email)->first();
-
-        $items = [
-            'user_id' => $user_id,
-            'share_id' => $request->share_id,
-            'comment' => $request->comment,
-        ];
-
         $items = Comment::create($request->all());
         return response()->json([
             'data' => $items
@@ -51,10 +44,22 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $item = Comment::where('share_id', $comment->id)->get();
-        return response()->json([
-            'data' => $item
-        ], 200);
+        $item = Comment::with('user')->where('share_id',$comment->share_id)->get();
+        if ($item) {
+            return response()->json(
+                [
+                    'data' => $item
+                ],
+                200
+            );
+        } else {
+            return response()->json(
+                [
+                    'message' => 'Not found',
+                ],
+                404
+            );
+        }
     }
 
     /**
