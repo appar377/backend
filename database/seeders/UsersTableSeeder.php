@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'tony',
             'email' => 'test1@example.com',
             'password' => 'aaaaaa',
-            'like_count' => 0
+            
         ];
         DB::table('users')->insert($param);
 
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'key',
             'email' => 'test2@example.com',
             'password' => 'bbbbbb',
-            'like_count' => 0
+
         ];
         DB::table('users')->insert($param);
 
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'tom',
             'email' => 'test3@example.com',
             'password' => 'cccccc',
-            'like_count' => 0
+
         ];
         DB::table('users')->insert($param);
     }

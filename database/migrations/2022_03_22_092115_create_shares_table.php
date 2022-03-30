@@ -17,6 +17,7 @@ class CreateSharesTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('share');
+            $table->integer('like_count')->default(0);
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
