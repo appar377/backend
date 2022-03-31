@@ -14,9 +14,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Comment $comment)
     {
-        $items = comment::all();
+        $items = Share::with('comments')->where('id',$comment->share_id)->get();
         return response()->json([
             'data' => $items
         ], 200);
