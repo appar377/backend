@@ -44,7 +44,7 @@ class CommentController extends Controller
      */
     public function show(Request $request)
     {
-        $item = Share::with('comments')->find($request->share_id);
+        $item = Share::with(['comments','user'])->find($request->share_id);
         if ($item) {
             return response()->json(
                 [
