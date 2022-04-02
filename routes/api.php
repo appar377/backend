@@ -10,6 +10,8 @@ Route::apiResource('/v1/user', UserController::class);
 
 Route::apiResource('/v1/share', ShareController::class);
 
-Route::apiResource('/v1/comment', CommentController::class);
+Route::apiResource('/v1/comment', CommentController::class)->only([
+  'index', 'store', 'update', 'destroy'
+]);
 
 Route::get('/comment', [CommentController::class, 'show']);

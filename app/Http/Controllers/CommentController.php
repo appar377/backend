@@ -42,9 +42,9 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment, Request $request)
+    public function show(Request $request)
     {
-        $item = Share::with('comments')->find($comment->share_id);
+        $item = Share::with('comments')->find($request->share_id);
         if ($item) {
             return response()->json(
                 [
