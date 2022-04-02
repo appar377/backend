@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Share;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class ShareController extends Controller
@@ -49,12 +50,15 @@ class ShareController extends Controller
      * @param  \App\Models\Share  $share
      * @return \Illuminate\Http\Response
      */
-    public function show(Share $share)
+    public function show(Share $share, Request $request)
     {
         $item = Share::with(['user'])->where('id',$share->id)->first();
-        if ($item) {
+
+        $comment_item = Comment::where('share_id', $request->share_id)->get();
+        if ($item || $comment_item) {
             return response()->json([
-                'data' => $item
+                'data' => $item,
+                'comment' => $comment_item
             ],
                 200
             );

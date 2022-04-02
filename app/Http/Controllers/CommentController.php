@@ -14,9 +14,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Comment $comment)
+    public function index()
     {
-        $items = Share::with('comments')->where('id',$comment->share_id)->get();
+        $items = Share::all();
         return response()->json([
             'data' => $items
         ], 200);
@@ -42,9 +42,9 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Comment $comment, Request $request)
     {
-        $item = Comment::with('user')->where('share_id',$comment->share_id)->get();
+        $item = Share::with('comments')->find($comment->share_id);
         if ($item) {
             return response()->json(
                 [
