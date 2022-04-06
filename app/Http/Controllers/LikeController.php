@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\User;
+use App\Models\Share;
+
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -14,7 +17,10 @@ class LikeController extends Controller
      */
     public function index()
     {
-        //
+        $items = Like::all();
+        return response()->json([
+            'data' => $items
+        ], 200);
     }
 
     /**
@@ -25,7 +31,57 @@ class LikeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::where('email',$request->email)->first();
+        $user_id = $user->id;
+
+        $param = [
+            'user_id' => $user_id,
+            'share_id' => $request->share_id,
+        ];
+        $get_query = Like::where([
+            ['user_id',$user_id],
+            ['share_id',$request->share_id]
+            ])->first();
+
+
+        if($get_query){
+            $item = Like::where([
+                ['user_id', $user_id],
+                ['share_id', $request->share_id]
+            ])->delete();
+
+            $share = Share::find($request->share_id)->first();
+
+            $like_count = $share->like_count;
+
+            $like_count--;
+
+            $update = [
+                'like_count' => $like_count,
+            ];
+
+            Share::where('id',$request->share_id)->update($update);
+
+            
+        } else {
+            $item = Like::create($param);
+
+            $share = Share::find($request->share_id)->first();
+
+            $like_count = $share->like_count;
+            
+            $like_count++;
+
+            $update = [
+                'like_count' => $like_count,
+            ];
+
+            $item = Share::where('id', $request->share_id)->update($update);
+        }
+
+        return response()->json([
+            'data' => $item
+        ], 201);
     }
 
     /**
@@ -48,7 +104,7 @@ class LikeController extends Controller
      */
     public function update(Request $request, Like $like)
     {
-        //
+
     }
 
     /**

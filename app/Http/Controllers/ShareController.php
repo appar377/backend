@@ -80,19 +80,7 @@ class ShareController extends Controller
      */
     public function update(Request $request, Share $share)
     {
-        $like_count = $share->like_count;
-
-        if ($like_count == 1) {
-            $like_count -= 1;
-        } elseif ($like_count == 0) {
-            $like_count += 1;
-        }
-
-        $update = [
-            'like_count' => $like_count,
-        ];
-
-        $item = Share::where('id', $share->id)->update($update);
+        
     }
 
     /**
